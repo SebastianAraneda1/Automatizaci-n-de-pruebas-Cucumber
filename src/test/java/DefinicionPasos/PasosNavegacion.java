@@ -19,67 +19,108 @@ public class PasosNavegacion {
 
     private WebDriver driver = PasosComunes.driver;
 
-    // Paso para acceder al catálogo de juegos de mesa
+    // ACCEDER AL ENLACE
     @Given("que estoy en el catalogo de juegos de mesa {string}")
-    public void que_estoy_en_el_catalogo_de_juegos_de_mesa(String catalogoUrl) {
+    public void que_estoy_en_el_catalogo_de_juegos_de_mesa(String catalogoUrl) throws InterruptedException {
         driver.get(catalogoUrl);
-        System.out.println("Accediendo al catálogo de juegos de mesa: " + catalogoUrl);
+        Thread.sleep(3000);
     }
 
-    // Paso para seleccionar el filtro "Agotado"
+    // HACER CLICK EN FILTRO AGOTADO
     @When("selecciono el filtro Agotado {string}")
-    public void selecciono_el_filtro_agotado(String filtroAgotadoXpath) {
-        clickElement(filtroAgotadoXpath, "Seleccionando el filtro 'Agotado'.");
+    public void selecciono_el_filtro_agotado(String filtroAgotadoXpath) throws InterruptedException {
+        driver.findElement(By.xpath(filtroAgotadoXpath)).click();
+        Thread.sleep(2500);
     }
 
-    // Paso para deseleccionar el filtro "Agotado"
+    // DESELECCIONAR FILTRO AGOTADO
     @When("lo deselecciono {string}")
     public void lo_deselecciono(String desactivacionFiltroXpath) {
-        clickElement(desactivacionFiltroXpath, "Desactivando el filtro 'Agotado'.");
+        driver.findElement(By.xpath(desactivacionFiltroXpath)).click();
+    }
+    
+    // VERIFICACION SOLO PRODUCTOS AGOTADOS
+    @Then("me mostrará los productos que estan agotados {string}")
+    public void me_mostrara_los_productos_que_estan_agotados(String productoAgotadoXpath) {
+        verifyElementsVisibility(productoAgotadoXpath, "Producto agotado visible en el catálogo.");
     }
 
-    // Paso para seleccionar el filtro de marca "Devir"
+    // SELECCIONAR FILTRO DEVIR
     @When("selecciono el filtro de marca Devir {string}")
     public void selecciono_el_filtro_de_marca_devir(String filtroMarcaDevirXpath) {
-        clickElement(filtroMarcaDevirXpath, "Seleccionando el filtro de marca 'Devir'.");
+        driver.findElement(By.xpath(filtroMarcaDevirXpath)).click();
     }
 
-    // Paso para deseleccionar el filtro de marca "Devir"
-    @When("lo desactivo {string}")
-    public void lo_desactivo(String desactivacionFiltroMarcaDevirXpath) {
-        clickElement(desactivacionFiltroMarcaDevirXpath, "Desactivando el filtro de marca 'Devir'.");
+    // DESELECCIONAR FILTRO DEVIR
+    @When("lo desactivo devir {string}")
+    public void lo_desactivo_devir(String desactivacionFiltroMarcaDevirXpath) {
+        driver.findElement(By.xpath(desactivacionFiltroMarcaDevirXpath)).click();
+    }
+    
+    // VERIFICAR SOLO MARCA DEVIR
+    @Then("mostrará solo productos de la marca Devir {string}")
+    public void mostrara_solo_productos_de_la_marca_devir(String productoMarcaDevirXpath) {
+        verifyElementsVisibility(productoMarcaDevirXpath, "Producto de la marca 'Devir' visible en el catálogo.");
+    }
+    
+    // PRECIO INICIAL
+    @When("ingreso un precio inicial {string} con valor {string}")
+    public void ingreso_un_precio_inicial(String campoPrecioMinXpath, String valorMin) throws InterruptedException {
+    	driver.findElement(By.xpath(campoPrecioMinXpath)).click();
+    	driver.findElement(By.xpath(campoPrecioMinXpath)).clear();
+    	driver.findElement(By.xpath(campoPrecioMinXpath)).sendKeys(valorMin);
+    	Thread.sleep(1500);
     }
 
-    // Paso para activar el filtro de mecánica "Colaborativo"
+    // PRECIO FINAL
+    @When("ingreso un precio final {string} con valor {string}")
+    public void ingreso_un_precio_final(String campoPrecioMaxXpath, String valorMax) throws InterruptedException {
+    	driver.findElement(By.xpath(campoPrecioMaxXpath)).click();
+    	driver.findElement(By.xpath(campoPrecioMaxXpath)).clear();
+    	driver.findElement(By.xpath(campoPrecioMaxXpath)).sendKeys(valorMax);
+    	Thread.sleep(2500);
+    }
+    
+    // DESACTIVAR FILTRO PRECIO
+    @Then("desactivo el filtro {string}")
+    public void desactivo_el_filtro(String desactivacionPrecio) throws InterruptedException {
+    	driver.findElement(By.xpath(desactivacionPrecio)).click();
+    	Thread.sleep(2500);
+    }
+
+    // ACTIVAR FILTRO COLABORATIVO
     @When("activo el filtro de mecanica Colaborativo {string}")
     public void activo_el_filtro_de_mecanica_colaborativo(String filtroColaborativoXpath) {
-        clickElement(filtroColaborativoXpath, "Activando el filtro de mecánica 'Colaborativo'.");
+        driver.findElement(By.xpath(filtroColaborativoXpath)).click();
+    }
+    
+    // DESACTIVAR FILTRO COLABORATIVO
+    @When("lo desactivo colab {string}")
+    public void lo_desactivo_colab(String desactivarFiltroColab) {
+        driver.findElement(By.xpath(desactivarFiltroColab)).click();
     }
 
-    // Paso para activar el filtro de tiempo de juego menor a 30 minutos
+    
+    // VERIFICAR FILTRO COLABORATIVO
+    @Then("mostrará solo productos de juego colaborativos {string}")
+    public void mostrara_solo_productos_de_juego_colaborativos(String productoColaborativoXpath) throws InterruptedException {
+        verifyElementsVisibility(productoColaborativoXpath, "Producto de mecánica 'Colaborativo' visible en el catálogo.");
+    	Thread.sleep(2500);
+    }
+    
+    // ACTIVAR FILTRO MENOR A 30 MINUTOS
     @When("activo el filtro de tiempo de juego menor a 30 min {string}")
     public void activo_el_filtro_de_tiempo_de_juego_menor_a_30_min(String filtroTiempoJuegoXpath) {
-        clickElement(filtroTiempoJuegoXpath, "Activando el filtro de tiempo de juego menor a 30 minutos.");
+        driver.findElement(By.xpath(filtroTiempoJuegoXpath)).click();
     }
 
-    // Paso para ingresar el precio inicial en el rango de precios
-    @When("ingreso un precio inicial {string} con valor {string}")
-    public void ingreso_un_precio_inicial(String campoPrecioMinXpath, String valorMin) {
-        enterText(campoPrecioMinXpath, valorMin, "Ingresando precio mínimo: " + valorMin);
-    }
-
-    // Paso para ingresar el precio final en el rango de precios
-    @When("ingreso un precio final {string} con valor {string}")
-    public void ingreso_un_precio_final(String campoPrecioMaxXpath, String valorMax) {
-        enterText(campoPrecioMaxXpath, valorMax, "Ingresando precio máximo: " + valorMax);
-    }
-
-    // Paso para buscar "5 Minutes Dungeon" en la barra de búsqueda
+    // IR A BARRA DE BUSQUEDA
     @When("me dirijo a la barra de busqueda {string}")
     public void me_dirijo_a_la_barra_de_busqueda(String barraBusquedaXpath) {
-        clickElement(barraBusquedaXpath, "Dirigiéndose a la barra de búsqueda.");
+        driver.findElement(By.xpath(barraBusquedaXpath)).click();
     }
 
+    // BUSCAR EN BARRA DE BUSQUEDA
     @When("busco 5 Minutes Dungeon {string} y presiono el boton buscar {string}")
     public void busco_5_minutes_dungeon_y_presiono_el_boton_buscar(String barraBusquedaXpath, String botonBuscarXpath) {
         enterText(barraBusquedaXpath, "5 Minutes Dungeon", "Buscando el juego '5 Minutes Dungeon'.");
@@ -90,24 +131,6 @@ public class PasosNavegacion {
     @Then("se desactiva el filtro mostrandome el catalogo de forma normal {string}")
     public void se_desactiva_el_filtro_mostrandome_el_catalogo_de_forma_normal(String productoNormalXpath) {
         verifyElementsVisibility(productoNormalXpath, "El filtro se ha desactivado y el catálogo se muestra de forma normal.");
-    }
-
-    // Paso para verificar que se muestran solo productos de la marca "Devir"
-    @Then("mostrará solo productos de la marca Devir {string}")
-    public void mostrara_solo_productos_de_la_marca_devir(String productoMarcaDevirXpath) {
-        verifyElementsVisibility(productoMarcaDevirXpath, "Producto de la marca 'Devir' visible en el catálogo.");
-    }
-
-    // Paso para verificar que se muestran solo productos agotados
-    @Then("me mostrará los productos que estan agotados {string}")
-    public void me_mostrara_los_productos_que_estan_agotados(String productoAgotadoXpath) {
-        verifyElementsVisibility(productoAgotadoXpath, "Producto agotado visible en el catálogo.");
-    }
-
-    // Paso para verificar que se muestran solo productos colaborativos
-    @Then("mostrará solo productos de juego colaborativos {string}")
-    public void mostrara_solo_productos_de_juego_colaborativos(String productoColaborativoXpath) {
-        verifyElementsVisibility(productoColaborativoXpath, "Producto de mecánica 'Colaborativo' visible en el catálogo.");
     }
 
     // Paso para verificar que se muestran solo productos con tiempo de juego menor a 30 minutos

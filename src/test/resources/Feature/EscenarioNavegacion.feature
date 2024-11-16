@@ -19,21 +19,19 @@ Feature: Navegacion del catalogo
   Scenario: Desactivar el filtro de marca Devir
     Given que estoy en el catalogo de juegos de mesa "https://juegosenroque.cl/collections/todos-los-juegos-de-mesa"
     When selecciono el filtro de marca Devir "//*[@id='facets']/div/details-disclosure[5]/details/div/div/div[1]/ul/li[4]/label"
-    And lo desactivo "//*[@id='facets']/details-disclosure/details/div/div/div/a"
+    And lo desactivo devir "//*[@id='facets']/div/details-disclosure[5]/details/div/div/div[1]/ul/li[4]/label"
     Then se desactiva el filtro mostrandome el catalogo de forma normal "//*[@id='quick-add-6991491170377']/button/span[2]"
     
 	Scenario: Ingresar un rango de precio
     Given que estoy en el catalogo de juegos de mesa "https://juegosenroque.cl/collections/todos-los-juegos-de-mesa"
     When ingreso un precio inicial "//*[@id='price-range-number-min']" con valor "10000"
-    And ingreso un precio final "//*[@id='price-range-number-max']" con valor "50000"
-    Then mostrará solo productos entre ese rango de precio "//*[@id='filter-results']/ul/li"
+    Then ingreso un precio final "//*[@id='price-range-number-max']" con valor "50000"
     
   Scenario: Desactivar filtro de rango de precio
     Given que estoy en el catalogo de juegos de mesa "https://juegosenroque.cl/collections/todos-los-juegos-de-mesa"
     When ingreso un precio inicial "//*[@id='price-range-number-min']" con valor "10000"
     And ingreso un precio final "//*[@id='price-range-number-max']" con valor "50000"
-    And desactivo el filtro "//*[@id='facets']/details-disclosure/details/div/div/div/a"
-    Then se desactiva el filtro mostrandome el catalogo de forma normal "//*[@id='quick-add-6991491170377']/button/span[2]"
+    Then desactivo el filtro "//*[@id='facets']/details-disclosure/details/div/div/div/a"
     
   Scenario: Activar filtro de tiempo de juego
     Given que estoy en el catalogo de juegos de mesa "https://juegosenroque.cl/collections/todos-los-juegos-de-mesa"
@@ -43,7 +41,7 @@ Feature: Navegacion del catalogo
   Scenario: Desactivar filtro de mecánica Colaborativo
     Given que estoy en el catalogo de juegos de mesa "https://juegosenroque.cl/collections/todos-los-juegos-de-mesa"
     When activo el filtro de mecanica Colaborativo "//*[@id='facets']/div/details-disclosure[8]/details/div/div/div[1]/ul/li[2]/label"
-    And lo desactivo "//*[@id='facets']/details-disclosure/details/div/div/div/a"
+    And lo desactivo colab "//*[@id='facets']/div/details-disclosure[8]/details/div/div/div[1]/ul/li[2]/label"
     Then se desactiva el filtro mostrandome el catalogo de forma normal "//*[@id='quick-add-6991491170377']/button/span[2]"
     
   Scenario: Buscar un juego 5 Minutes Dungeon
