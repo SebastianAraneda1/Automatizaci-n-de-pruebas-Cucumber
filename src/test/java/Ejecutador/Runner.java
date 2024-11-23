@@ -5,10 +5,11 @@ import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(features= {"src/test/resources/feature"},
-				glue= {"DefinicionPasos"},
-				plugin = {"json:target/cucumber.json","pretty","html:target/cucumber-reports/report.html", "junit:target/cucumber-results.xml"}, 
-				monochrome = true)
-
+@CucumberOptions(
+    features = {"src/test/resources/Feature"},
+    glue = {"DefinicionPasos"},
+    plugin = {"pretty", "html:target/cucumber-reports.html"},
+    monochrome = true
+)
 public class Runner {
 }
