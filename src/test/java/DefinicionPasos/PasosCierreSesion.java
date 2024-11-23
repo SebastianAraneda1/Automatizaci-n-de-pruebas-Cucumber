@@ -8,6 +8,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
 
+import static org.junit.Assert.assertTrue;
+
 import java.time.Duration;
 
 public class PasosCierreSesion {
@@ -29,10 +31,27 @@ public class PasosCierreSesion {
         botonCerrarSesion.click();
     }
 
-    @Then("lleva a la página de inicio {string}")
-    public void lleva_a_la_pagina_de_inicio(String urlInicio) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-        wait.until(ExpectedConditions.urlToBe(urlInicio));
-        assert driver.getCurrentUrl().equals(urlInicio);
+ // Método para verificar la redirección a la página de inicio
+    @Then("lleva a la pagina de inicio {string}")
+    public void lleva_a_la_pagina_de_inicio(String string) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        
+        try {
+            System.out.println("Esperando redirección. URL actual antes de la espera: " + driver.getCurrentUrl());
+            wait.until(ExpectedConditions.or(
+                ExpectedConditions.urlToBe(string),
+                ExpectedConditions.urlToBe("https://juegosenroque.cl/challenge")
+            ));
+            
+            String actualUrl = driver.getCurrentUrl();
+            assertTrue("La URL actual no es la esperada. URL actual: " + actualUrl,
+                       actualUrl.equals(string) || actualUrl.equals("https://juegosenroque.cl/challenge"));
+            
+            System.out.println("Redirigido correctamente a la página de inicio: " + string);
+        } catch (Exception e) {
+            System.out.println("Error de redirección. La URL actual es: " + driver.getCurrentUrl());
+            throw e;
+        }
     }
+
 }

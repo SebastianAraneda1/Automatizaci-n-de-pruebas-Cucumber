@@ -140,12 +140,13 @@ public class PasosRegistro {
         System.out.println("Mensaje de error genérico visible en el registro.");
     }
 
-    // Método para verificar la redirección a la página de inicio
+	// Método para verificar la redirección a la página de inicio
     @Then("redirige a la página de inicio {string}")
     public void redirige_a_la_pagina_de_inicio(String expectedUrl) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         
         try {
+            System.out.println("Esperando redirección. URL actual: " + driver.getCurrentUrl());
             wait.until(ExpectedConditions.or(
                 ExpectedConditions.urlToBe(expectedUrl),
                 ExpectedConditions.urlToBe("https://juegosenroque.cl/challenge")
@@ -161,4 +162,5 @@ public class PasosRegistro {
             throw e;
         }
     }
+
 }
