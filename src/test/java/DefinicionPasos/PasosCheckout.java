@@ -210,6 +210,16 @@ public class PasosCheckout {
 	    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", termsCheckbox);
 	    System.out.println("Aceptando términos y condiciones.");
 	}
+	
+	@When("hago click en el botón Pagar ahora sin rellenar campos {string}")
+	public void hago_click_en_el_botón_pagar_ahora_sin_rellenar_campos(String string) {
+		driver.findElement(By.xpath(string)).click();
+	}
+
+	@Then("me redireccionará a flow {string}")
+	public void me_redireccionará_a_flow(String string) {
+		driver.get(string);
+	}
 
 	public void handleAlertIfPresent() {
 	    try {
