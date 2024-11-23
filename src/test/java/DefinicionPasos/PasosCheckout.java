@@ -246,5 +246,42 @@ public class PasosCheckout {
 	        System.out.println("No hay alerta presente.");
 	    }
 	}
+	
+	@When("ingreso un email inexistente {string} {string}")
+	public void ingreso_un_email_inexistente(String string, String string2) {
+    	driver.findElement(By.xpath(string)).click();
+    	driver.findElement(By.xpath(string)).clear();
+    	driver.findElement(By.xpath(string)).sendKeys(string2);
+	}
+
+
+	@When("ingreso una dirección inexistente {string} {string}")
+	public void ingreso_una_dirección_inexistente(String string, String string2) {
+    	driver.findElement(By.xpath(string)).click();
+    	driver.findElement(By.xpath(string)).clear();
+    	driver.findElement(By.xpath(string)).sendKeys(string2);
+	}
+
+	@When("ingreso un teléfono inexistente {string} {string}")
+	public void ingreso_un_teléfono_inexistente(String string, String string2) {
+    	driver.findElement(By.xpath(string)).click();
+    	driver.findElement(By.xpath(string)).clear();
+    	driver.findElement(By.xpath(string)).sendKeys(string2);
+	}
+
+	@Then("Seleccionar tipo de entrega retiro en tienda {string}")
+	public void seleccionar_tipo_de_entrega_retiro_en_tienda(String string) {
+		driver.findElement(By.xpath(string)).click();
+	}
+	
+	@Then("Seleccionar tipo de pago Transferencia o deposito bancario {string}")
+	public void seleccionar_tipo_de_pago_transferencia_o_deposito_bancario(String string) {
+		driver.findElement(By.xpath(string)).click();
+	}
+
+	@When("Selecciono tipo de pago Transferencia o deposito bancario {string}")
+	public void selecciono_tipo_de_pago_transferencia_o_deposito_bancario(String string) {
+		driver.findElement(By.xpath(string)).click();
+	}
 
 }
