@@ -34,11 +34,20 @@ public class PasosCheckout {
 
     @When("ingreso un nombre {string} {string}")
     public void ingreso_un_nombre(String xpath, String nombre) throws InterruptedException {
-    	driver.findElement(By.xpath(xpath)).click();
-    	driver.findElement(By.xpath(xpath)).clear();
-    	driver.findElement(By.xpath(xpath)).sendKeys(nombre);
-    	Thread.sleep(2500);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        WebElement nombreField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
+        
+        // Desplazarse hasta el elemento si no está en la vista
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", nombreField);
+        
+        // Asegurarse de que el elemento es clickeable
+        wait.until(ExpectedConditions.elementToBeClickable(nombreField));
+        nombreField.click();
+        nombreField.clear();
+        nombreField.sendKeys(nombre);
+        Thread.sleep(1500);
     }
+
 
     
     @When("ingreso un apellido {string} {string}")
@@ -93,8 +102,14 @@ public class PasosCheckout {
 
     @When("hago click en el botón pagar {string}")
     public void hago_click_en_el_boton_pagar(String botonPagarXpath) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-        WebElement pagarButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(botonPagarXpath)));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        WebElement pagarButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(botonPagarXpath)));
+        
+        // Desplazarse hasta el botón si no está en la vista
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", pagarButton);
+        
+        // Asegurarse de que el botón es clickeable
+        wait.until(ExpectedConditions.elementToBeClickable(pagarButton));
         pagarButton.click();
         System.out.println("Haciendo click en el botón pagar.");
     }
